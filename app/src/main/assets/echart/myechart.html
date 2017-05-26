@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        html, body {
+        height: 100%;
+        }
+        body {
+        background-color: #fff;
+        color: #fff;
+        font-family: "Microsoft YaHei";
+        }
+        .bg {
+        }
+        .item {
+        padding: 30px 30px 50px;
+        }
+    </style>
+</head>
+<body>
+<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+<div id="main" style="float: left; width: 360px;height:380px; margin-top: 20px"></div>
+<!-- ECharts单文件引入 -->
+<script src="js/echarts.min.js"></script>
+<script type="text/javascript">
+
+ //声明Echarts实例
+   var myChart;
+ //声明图表配置项和数据
+   var options;
+
+ //创建折线图
+   function createLineChart(start,end){
+       options = {
+            title : {
+                     text: '脉搏值(次/min)',
+                     subtext: '纯属虚构'
+                    },
+
+            tooltip: {
+                trigger: 'axis',
+                //formatter: "Temperature : <br/>{b}km : {c}°C"
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} °C'
+                }
+            },
+            yAxis: {
+                type: 'category',
+                axisLine: {onZero: false},
+                axisLabel: {
+                    formatter: '{value} km'
+                },
+                boundaryGap: false,
+                data: ['0', '10', '20', '30', '40', '50', '60', '70', '80']
+            },
+
+              dataZoom: [{
+                  show: false,
+                  type: 'slider',
+                  xAxisIndex: 0,
+                  start: start,
+                  end: end
+                }],
+
+            series: [
+                {
+                    name: '高度(km)与气温(°C)变化关系',
+                    type: 'line',
+                    smooth: true,
+                    lineStyle: {
+                        normal: {
+                            width: 3,
+                            shadowColor: 'rgba(0,0,0,0.4)',
+                            shadowBlur: 10,
+                            shadowOffsetY: 10
+                        }
+                    },
+                    data:[15, -50, -56.5, -46.5, -22.1, -2.5, -27.7, -55.7, -76.5]
+                }
+            ]
+    };
+  }
+
+
+//创建柱状图
+    function createBarChart(){
+
+        options = {
+            title : {
+                //text: '某地区蒸发量和降水量',
+                //subtext: '纯属虚构'
+            },
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['蒸发量','降水量']
+            },
+
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'蒸发量',
+                    type:'bar',
+                    data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name: '平均值'}
+                        ]
+                    }
+                },
+                {
+                    name:'降水量',
+                    type:'bar',
+                    data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+                    markPoint : {
+                        data : [
+                            {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183},
+                            {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
+                        ]
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name : '平均值'}
+                        ]
+                    }
+                }
+            ]
+        };
+    }
+
+
+ //创建饼状图
+   function createPieChart(){
+
+      options = {
+            title : {
+                text: '某站点用户访问来源',
+                subtext: '纯属虚构',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+            },
+            series : [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:335, name:'直接访问'},
+                        {value:310, name:'邮件营销'},
+                        {value:234, name:'联盟广告'},
+                        {value:135, name:'视频广告'},
+                        {value:1548, name:'搜索引擎'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+   }
+
+//创建气泡图
+  function createMoreChart(){
+
+        var data = [
+    [[28604,77,17096869,'Australia',1990],[31163,77.4,27662440,'Canada',1990],[1516,68,1154605773,'China',1990],[13670,74.7,10582082,'Cuba',1990],[28599,75,4986705,'Finland',1990],[29476,77.1,56943299,'France',1990],[31476,75.4,78958237,'Germany',1990],[28666,78.1,254830,'Iceland',1990],[1777,57.7,870601776,'India',1990],[29550,79.1,122249285,'Japan',1990],[2076,67.9,20194354,'North Korea',1990],[12087,72,42972254,'South Korea',1990],[24021,75.4,3397534,'New Zealand',1990],[43296,76.8,4240375,'Norway',1990],[10088,70.8,38195258,'Poland',1990],[19349,69.6,147568552,'Russia',1990],[10670,67.3,53994605,'Turkey',1990],[26424,75.7,57110117,'United Kingdom',1990],[37062,75.4,252847810,'United States',1990]],
+    [[44056,81.8,23968973,'Australia',2015],[43294,81.7,35939927,'Canada',2015],[13334,76.9,1376048943,'China',2015],[21291,78.5,11389562,'Cuba',2015],[38923,80.8,5503457,'Finland',2015],[37599,81.9,64395345,'France',2015],[44053,81.1,80688545,'Germany',2015],[42182,82.8,329425,'Iceland',2015],[5903,66.8,1311050527,'India',2015],[36162,83.5,126573481,'Japan',2015],[1390,71.4,25155317,'North Korea',2015],[34644,80.7,50293439,'South Korea',2015],[34186,80.6,4528526,'New Zealand',2015],[64304,81.6,5210967,'Norway',2015],[24787,77.3,38611794,'Poland',2015],[23038,73.13,143456918,'Russia',2015],[19360,76.5,78665830,'Turkey',2015],[38225,81.4,64715810,'United Kingdom',2015],[53354,79.1,321773631,'United States',2015]]
+];
+
+    options = {
+        backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
+            offset: 0,
+            color: '#f7f8fa'
+        }, {
+            offset: 1,
+            color: '#cdd0d5'
+        }]),
+        title: {
+            text: '1990 与 2015 年各国家人均寿命与 GDP'
+        },
+        legend: {
+            right: 10,
+            data: ['1990', '2015']
+        },
+        xAxis: {
+            splitLine: {
+                lineStyle: {
+                    type: 'dashed'
+                }
+            }
+        },
+        yAxis: {
+            splitLine: {
+                lineStyle: {
+                    type: 'dashed'
+                }
+            },
+            scale: true
+        },
+        series: [{
+            name: '1990',
+            data: data[0],
+            type: 'scatter',
+            symbolSize: function (data) {
+                return Math.sqrt(data[2]) / 5e2;
+            },
+            label: {
+                emphasis: {
+                    show: true,
+                    formatter: function (param) {
+                        return param.data[3];
+                    },
+                    position: 'top'
+                }
+            },
+            itemStyle: {
+                normal: {
+                    shadowBlur: 10,
+                    shadowColor: 'rgba(120, 36, 50, 0.5)',
+                    shadowOffsetY: 5,
+                    color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                        offset: 0,
+                        color: 'rgb(251, 118, 123)'
+                    }, {
+                        offset: 1,
+                        color: 'rgb(204, 46, 72)'
+                    }])
+                }
+            }
+        }, {
+            name: '2015',
+            data: data[1],
+            type: 'scatter',
+            symbolSize: function (data) {
+                return Math.sqrt(data[2]) / 5e2;
+            },
+            label: {
+                emphasis: {
+                    show: true,
+                    formatter: function (param) {
+                        return param.data[3];
+                    },
+                    position: 'top'
+                }
+            },
+            itemStyle: {
+                normal: {
+                    shadowBlur: 10,
+                    shadowColor: 'rgba(25, 100, 150, 0.5)',
+                    shadowOffsetY: 5,
+                    color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                        offset: 0,
+                        color: 'rgb(129, 227, 238)'
+                    }, {
+                        offset: 1,
+                        color: 'rgb(25, 183, 207)'
+                    }])
+                }
+            }
+        }]
+};
+
+  }
+
+//显示图表
+   function createChart(type,start,end){
+
+        if(type=='line'){
+          createLineChart(start,end);
+        }
+
+        if(type=='bar'){
+          createBarChart(start,end);
+        }
+
+        if(type=='pie'){
+          createPieChart(start,end);
+        }
+
+        if(type=='more'){
+          createMoreChart()
+        }
+
+        // 基于准备好的dom，初始化echarts实例
+	    myChart = echarts.init(document.getElementById('main'));
+        //使用指定的配置项和数据显示图表。
+	    myChart.setOption(options);
+    }
+
+
+</script>
+</body>
