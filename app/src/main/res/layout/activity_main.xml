@@ -1,14 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="550dp">
 
     <LinearLayout
         android:id="@+id/bt_ly"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:gravity="center_vertical">
 
         <Button
             android:id="@+id/linechart_bt"
@@ -44,34 +43,45 @@
 
     </LinearLayout>
 
-    <WebView
-        android:id="@+id/chartshow_wb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/bt_ly"
-        android:layout_centerHorizontal="true"></WebView>
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/chartshow_wb"
-        android:gravity="bottom">
+        android:layout_below="@id/bt_ly"
+        android:layout_centerHorizontal="true">
 
-        <ImageView
-            android:id="@+id/iv_left"
+        <WebView
+            android:id="@+id/chartshow_wb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/left_green_btn" />
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"></WebView>
 
-        <ImageView
-            android:id="@+id/iv_right"
-            android:layout_width="wrap_content"
+
+        <RelativeLayout
+            android:id="@+id/rl_bottom"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/right_green_btn" />
+            android:layout_alignParentBottom="true"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_left"
+                android:layout_width="45dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@mipmap/left_blue_bg" />
+
+            <ImageView
+                android:id="@+id/iv_right"
+                android:layout_width="45dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/right_blue_bg" />
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
 

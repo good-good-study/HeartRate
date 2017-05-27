@@ -6,11 +6,20 @@ android {
 
     defaultConfig {
         applicationId "com.neusoft.heart.rate"
-        minSdkVersion 15
-        targetSdkVersion 23
+        minSdkVersion 17
+        targetSdkVersion 16
         versionCode 1
         versionName "1.0"
     }
+/**
+ * 当你的targetSdkVersion为17以上时，addJavascriptInterface会提示错误：
+ * “ None of the methods in the added interface have been annotated with @android.webkit.JavascriptInterface; they will not be visible in API 17 ”。
+ * 大概意思就是说在注解@JavascriptInterface中的方法在API 17会不可见。  所以这里设置成 16
+ */
+
+
+
+
     buildTypes {
         release {
             minifyEnabled false
