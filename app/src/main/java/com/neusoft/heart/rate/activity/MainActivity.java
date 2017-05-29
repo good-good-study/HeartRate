@@ -1,4 +1,4 @@
-package com.neusoft.heart.rate;
+package com.neusoft.heart.rate.activity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -11,6 +11,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.neusoft.heart.rate.R;
+import com.neusoft.heart.rate.bean.EchartsDataBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button piechartBt;
     @BindView(R.id.morechart_bt)
     Button morechartBt;
+    @BindView(R.id.addchart_bt)
+    Button addchartBt;
     @BindView(R.id.chartshow_wb)
     WebView chartshowWb;
     @BindView(R.id.iv_left)
@@ -62,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         barchartBt.setOnClickListener(this);
         piechartBt.setOnClickListener(this);
         morechartBt.setOnClickListener(this);
+        addchartBt.setOnClickListener(this);
         ivLeft.setOnClickListener(this);
         ivRight.setOnClickListener(this);
 
@@ -87,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onPageFinished(WebView view, String url) {
                 //最好在这里调用js代码 以免网页未加载完成
-                chartshowWb.loadUrl("javascript:createChart('line');");
+                chartshowWb.loadUrl("javascript:createChart('line'," + EchartsDataBean.getInstance().getEchartsLineJson() + ");");
                 findViewById(R.id.rl_bottom).setVisibility(View.VISIBLE);
                 if (dialog.isShowing()) {
                     dialog.dismiss();
@@ -96,24 +102,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    String newDataX = "['13:20', '13:30', '13:40', '13:50', '14:00', '14:10', '14:20', '14:30', " +
+            "'14:40','14:50','15:00','15:10','15:20','15:30','15:40','15:50','16:00'," +
+            "'16:10','16:20','16:30']";
+
+    String newDataY = "[0 ,70,60, 60, 90, 56, 150, 60, 80,0 ,70,60, 60,60,60,140,60,0 ,70,60]";
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
 
             case R.id.linechart_bt:
-                chartshowWb.loadUrl("javascript:createChart('line');");
+                chartshowWb.loadUrl("javascript:createChart('line'," + EchartsDataBean.getInstance().getEchartsLineJson() + ");");
                 findViewById(R.id.rl_bottom).setVisibility(View.VISIBLE);
                 break;
             case R.id.barchart_bt:
-                chartshowWb.loadUrl("javascript:createChart('bar');");
+                chartshowWb.loadUrl("javascript:createChart('bar'," + EchartsDataBean.getInstance().getEchartsBarJson() + ");");
                 findViewById(R.id.rl_bottom).setVisibility(View.GONE);
                 break;
             case R.id.piechart_bt:
-                chartshowWb.loadUrl("javascript:createChart('pie');");
+                chartshowWb.loadUrl("javascript:createChart('pie'," + EchartsDataBean.getInstance().getEchartsPieJson() + ");");
                 findViewById(R.id.rl_bottom).setVisibility(View.GONE);
                 break;
             case R.id.morechart_bt://createMapChart
-                chartshowWb.loadUrl("javascript:createChart('more');");
+                chartshowWb.loadUrl("javascript:createChart('more'," + EchartsDataBean.getInstance().getEchartsLineJson() + ");");
                 findViewById(R.id.rl_bottom).setVisibility(View.GONE);
                 break;
             case R.id.iv_left:
@@ -123,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 dealwithRight();
                 break;
             default:
+                chartshowWb.loadUrl("javascript:updateDataXY(" + newDataX + "," + newDataY + ");");
+                findViewById(R.id.rl_bottom).setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -139,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (end <= 105 && end >= start + 15) {
                 end -= 5;
             }
-            chartshowWb.loadUrl("javascript:upZoomState(" + start + "," + end + ");");
+            chartshowWb.loadUrl("javascript:updateZoomState(" + start + "," + end + ");");
         } else {
             Log.i(TAG, "start == " + start + "  end== " + end);
         }
@@ -151,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (start < end - 15) {
                 start += 5;
             }
-            chartshowWb.loadUrl("javascript:upZoomState(" + start + "," + end + ");");
+            chartshowWb.loadUrl("javascript:updateZoomState(" + start + "," + end + ");");
         } else {
             Log.i(TAG, "start == " + start + "  end== " + end);
         }

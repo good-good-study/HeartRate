@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="550dp">
+    android:layout_height="500dp">
 
     <LinearLayout
         android:id="@+id/bt_ly"
@@ -16,6 +16,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="折线图" />
+
+        <Button
+            android:id="@+id/addchart_bt"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="追加" />
 
         <Button
             android:id="@+id/barchart_bt"
@@ -39,7 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="气泡图" />
+            android:text="水含量" />
+
 
     </LinearLayout>
 
