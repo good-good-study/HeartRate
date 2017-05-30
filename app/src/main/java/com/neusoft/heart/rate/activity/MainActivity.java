@@ -3,6 +3,7 @@ package com.neusoft.heart.rate.activity;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -153,8 +154,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (end <= 105 && end >= start + 15) {
                 end -= 5;
             }
+            if (!ivRight.isEnabled()) {
+                ivRight.setEnabled(true);
+                ivRight.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.right_blue_bg));
+            }
             chartshowWb.loadUrl("javascript:updateZoomState(" + start + "," + end + ");");
         } else {
+            if (ivLeft.isEnabled()) {
+                ivLeft.setEnabled(false);
+                ivLeft.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.left_gray_bg));
+            }
             Log.i(TAG, "start == " + start + "  end== " + end);
         }
     }
@@ -165,8 +174,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (start < end - 15) {
                 start += 5;
             }
+            if (!ivLeft.isEnabled()) {
+                ivLeft.setEnabled(true);
+                ivLeft.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.left_blue_bg));
+            }
             chartshowWb.loadUrl("javascript:updateZoomState(" + start + "," + end + ");");
         } else {
+            if (ivRight.isEnabled()) {
+                ivRight.setEnabled(false);
+                ivRight.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.right_gray_bg));
+            }
             Log.i(TAG, "start == " + start + "  end== " + end);
         }
     }
