@@ -41,6 +41,14 @@
             android:layout_weight="1"
             android:text="气泡图" />
 
+        <Button
+            android:id="@+id/oom_bt"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="OOM" />
+
     </LinearLayout>
 
     <RelativeLayout

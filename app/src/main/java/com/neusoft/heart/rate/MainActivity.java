@@ -2,6 +2,7 @@ package com.neusoft.heart.rate;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView ivLeft;
     @BindView(R.id.iv_right)
     ImageView ivRight;
+    @BindView(R.id.oom_bt)
+    Button ivOOM;
     String TAG;
     private ProgressDialog dialog;
 
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         morechartBt.setOnClickListener(this);
         ivLeft.setOnClickListener(this);
         ivRight.setOnClickListener(this);
+        ivOOM.setOnClickListener(this);
 
         //进行webwiev的一堆设置
         chartshowWb.getSettings().setAllowFileAccess(true);
@@ -121,6 +125,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.iv_right:
                 dealwithRight();
+                break;
+            case R.id.oom_bt:
+                Intent intent = new Intent(MainActivity.this, ShowOOMExceptionActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;
